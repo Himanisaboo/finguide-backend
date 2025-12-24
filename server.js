@@ -31,10 +31,13 @@ app.post('/api/register', async (req,res)=>{
 });
 
 // EXPENSES
-app.get('/api/expenses/:userId', async (req,res)=>{
-  const expenses = await Expense.find({userId:req.params.userId}).sort({createdAt:-1});
-  const total = expenses.reduce((s,e)=>s+e.amount,0);
-  res.json({expenses,total});
+// 🔥 ADD THIS ROOT ROUTE (BEFORE other routes)
+app.get('/', (req, res) => {
+  res.json({ 
+    message: '🚀 FinGuide API Live!', 
+    status: '✅ OK',
+    timestamp: new Date().toISOString()
+  });
 });
 
 app.post('/api/expenses/:userId', async (req,res)=>{
@@ -62,3 +65,4 @@ app.post('/api/ai-analyze/:userId', async (req,res)=>{
 });
 
 app.listen(process.env.PORT||3000,()=>console.log('🚀 Server ON!'));
+
